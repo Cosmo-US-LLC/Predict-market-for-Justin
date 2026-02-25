@@ -1,64 +1,43 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { scrollToWallet } from "../../../lib/utils";
-import { cn } from "../../../lib/utils";
+import { Link } from 'react-router-dom';
+import { cn } from '../../../lib/utils';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../../ui/carousel";
+} from '../../ui/carousel';
 
 export default function HowToBuy({
   steps = [],
-  title = "How to Buy",
-  subtitle = "Follow the guide below to purchase $PREDICT during the presale. The process supports both crypto and card payments and is designed to be quick, secure, and easy to follow.",
-  buyButtonText = "BUY $PREDICT",
-  buyButtonLink = "#wallet",
+  title = 'How to Buy',
+  subtitle = 'Follow the guide below to purchase $PREDICT during the presale. The process supports both crypto and card payments and is designed to be quick, secure, and easy to follow.',
+  buyButtonText = 'BUY $PREDICT',
+  buyButtonLink = '/buy',
 }) {
-  const [api, setApi] = useState();
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCurrent(api.selectedScrollSnap());
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
-
   if (!steps || steps.length === 0) {
     return null;
   }
 
   return (
-    <section
+    <section 
       id="how-to-buy"
-      className="bg-white py-12 md:py-20 relative overflow-hidden"
+      className="relative overflow-hidden bg-white py-12 md:py-20"
     >
-      <div
-        style={{
-          background:
-            "radial-gradient(29.62% 41.65% at 50% 58.4%, rgba(0, 128, 237, 0.36) 0%, rgba(0, 128, 237, 0.00) 100%)",
-        }}
-        className="absolute top-0 left-0 w-full h-full z-0"
-      ></div>
-      <div className="max-w-[1280px] mx-auto px-4 md:px-2 relative z-10">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-8 relative z-10">
         {/* Header Section */}
         <div className="flex flex-col gap-[9px] items-center text-center mb-12 md:mb-12">
-          <h2 className="heading-two">{title}</h2>
-          <p className="paragraph-regular max-w-[933px]">{subtitle}</p>
+          <h2 className="text-3xl md:text-[45px] font-medium leading-[53px] tracking-[-2.56px] capitalize text-black">
+            {title}
+          </h2>
+          <p className="text-[#4b4b4b] text-base md:text-[20px] leading-[22.4px] md:leading-[28px] tracking-[0.32px] max-w-[703px]">
+            {subtitle}
+          </p>
         </div>
 
         {/* Mobile Carousel */}
-        <div className="md:hidden mb-12 flex flex-col items-center gap-6">
+        <div className="md:hidden mb-8">
           <Carousel
-            setApi={setApi}
             opts={{
               align: "start",
               loop: true,
@@ -68,40 +47,37 @@ export default function HowToBuy({
             <CarouselContent className="-ml-3">
               {steps.map((step) => (
                 <CarouselItem key={step.id} className="pl-3">
-                  <div
-                    className="bg-white rounded-[10px] border-[1px] border-[#DDD] 
-                  p-4 flex flex-col gap-4 min-h-[303px]"
-                  >
+                  <div className="bg-white rounded-[15px] border border-[#e5e5e5] p-4 flex flex-col gap-[19px]">
                     {/* Image Container */}
-                    <div className="rounded-[15px] overflow-hidden relative bg-gray-100">
+                    <div 
+                        className="h-[160px] rounded-[15px] overflow-hidden relative bg-[#0080ED]"
+                    >
                       <img
                         src={step.image}
                         alt={step.title}
-                        className="w-full h-full object-fill"
+                        className="w-full h-full object-cover"
                         onError={(e) => {
-                          e.target.style.display = "none";
+                          e.target.style.display = 'none';
                         }}
                       />
                     </div>
 
                     {/* Text Content */}
-                    <div className="flex flex-col gap-3">
-                      {/* Step Indicator */}
-                      <div className="flex items-center gap-2">
-                        <div className="bg-white border border-[#0080ED] rounded-full px-3 py-[3px] w-[64px]">
-                          <span className="text-[#000] text-[12px] !leading-[12px] !font-medium">
+                    <div className="flex flex-col gap-2">
+                      {/* Step Header */}
+                      <div className="flex gap-3 flex-col">
+                        <div className="border border-[#0080ED] max-w-[80px] rounded-[41.006px] px-3 py-1 bg-white">
+                          <span className="text-[13px] font-normal leading-[22px] tracking-[0.28px] text-[#0080ED] whitespace-nowrap">
                             {step.stepNumber}
                           </span>
                         </div>
-
-                        {/* Heading */}
-                        <h3 className="text-[#000] !font-[500]">
+                        <h3 className="text-xl font-medium leading-7 capitalize text-black">
                           {step.title}
                         </h3>
                       </div>
 
                       {/* Description */}
-                      <p className="text-[#000] text-sm leading-[22px] tracking-[0.28px]">
+                      <p className="text-[#4b4b4b] text-sm leading-[22px] tracking-[0.28px]">
                         {step.description}
                       </p>
                     </div>
@@ -110,39 +86,25 @@ export default function HowToBuy({
               ))}
             </CarouselContent>
           </Carousel>
-
-          {/* Pagination Dots */}
-          <div className="flex items-center justify-center gap-2">
-            {steps.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => api?.scrollTo(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                  current === index
-                    ? "bg-[#0080ED] w-2 h-2"
-                    : "bg-gray-300 w-2 h-2"
-                }`}
-                aria-label={`Go to step ${index + 1}`}
-              />
-            ))}
-          </div>
         </div>
 
         {/* Desktop Grid */}
-        <div className="hidden md:grid grid-cols-2 gap-[21px] mb-12">
+        <div className="hidden md:grid grid-cols-2 gap-[21px] mb-10">
           {steps.map((step) => (
             <div
               key={step.id}
-              className="bg-white rounded-[15px] border-[1px] border-[#DDD] p-[26px] flex flex-col gap-[19px]"
+              className="bg-white rounded-[15px] border border-[#e5e5e5] p-[26px] flex flex-col gap-[19px]"
             >
               {/* Image Container */}
-              <div className="h-[186px] rounded-[15px] overflow-hidden relative bg-gray-100">
+              <div 
+                className="h-[186px] rounded-[15px] overflow-hidden relative bg-[#0080ED]"
+              >
                 <img
                   src={step.image}
                   alt={step.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.target.style.display = "none";
+                    e.target.style.display = 'none';
                   }}
                 />
               </div>
@@ -151,18 +113,18 @@ export default function HowToBuy({
               <div className="flex flex-col gap-2">
                 {/* Step Header */}
                 <div className="flex gap-3 items-center">
-                  <div className="bg-white border border-[#0080ED] rounded-full px-3 py-[3px] flex items-center justify-center shrink-0">
-                    <span className="text-sm leading-[22px] tracking-[0.28px] whitespace-nowrap">
+                  <div className="border border-[#0080ED] rounded-[41.006px] px-3 py-1 bg-white">
+                    <span className="text-[13px] font-normal leading-[22px] tracking-[0.28px] text-[#0080ED] whitespace-nowrap">
                       {step.stepNumber}
                     </span>
                   </div>
-                  <h3 className="text-[#000] text-2xl leading-8">
+                  <h3 className="text-2xl font-medium leading-8 capitalize text-black">
                     {step.title}
                   </h3>
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-700 text-[18px] leading-[150%] tracking-[0.32px] whitespace-pre-line">
+                <p className="text-[#4b4b4b] text-base leading-6 tracking-[0.32px] whitespace-pre-line">
                   {step.description}
                 </p>
               </div>
@@ -170,20 +132,20 @@ export default function HowToBuy({
           ))}
         </div>
 
-        {/* Buttons */}
-        <div className="flex md:flex-row flex-col gap-4 justify-center items-center">
-          <button
-            onClick={scrollToWallet}
-            className="btn_primary w-full sm:w-[285px] md:py-[21px] md:px-[63px] flex items-center justify-center shadow-md"
+        {/* CTA Buttons */}
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Link
+            to={buyButtonLink}
+            className="btn_primary w-[232px] flex items-center justify-center text-sm md:text-base"
           >
             {buyButtonText}
-          </button>
-          <Link
-            to="/support"
-            className="btn_secondary md:!max-w-[285px] max-w-[100%] md:!py-[21px] md:!px-[3px] !w-full sm:w-auto "
+          </Link>
+          <button
+            type="button"
+            className="w-[200px] rounded-full border border-black bg-white px-6 py-3 text-sm font-medium leading-6 text-black shadow-[0_0_0_0.5px_rgba(0,0,0,0.08)] hover:bg-black/5 transition-colors"
           >
             Need Support?
-          </Link>
+          </button>
         </div>
       </div>
     </section>

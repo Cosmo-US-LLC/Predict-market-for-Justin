@@ -4,7 +4,6 @@ import featureImage3 from "../../../assets/images/home/predicts_the_feature/pred
 import featureImage4 from "../../../assets/images/home/predicts_the_feature/predicts_the_feature_image4.webp";
 import featureImage5 from "../../../assets/images/home/predicts_the_feature/predicts_the_feature_image5.webp";
 import featureImage6 from "../../../assets/images/home/predicts_the_feature/predicts_the_feature_image6.webp";
-import { useState, useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -13,82 +12,66 @@ import {
 
 
 export default function PredictsTheFeatures({
-  title = "Redefining How The World Predicts The Future",
+  title = "Redefining How the World Predicts the Future",
   subtitle = "The building blocks behind the world's most rewarding prediction platform",
   features = [
     {
       id: 1,
       image: featureImage1,
       title: "Real Time Prediction Markets",
-      description: "Users can participate in live markets across politics, finance, sports, and a wide range of global events in real time.",
+      description: "Users can participate in live markets covering politics, finance, sports, and global events as they unfold.",
     },
     {
       id: 2,
       image: featureImage2,
       title: "Crowd Powered Probabilities",
-      description: "Market prices reflect collective intelligence, turning public sentiment into clear probability signals, peer to peer, without middlemen.",
+      description: "Market prices reflect collective intelligence, turning public sentiment into clear probability signals.",
     },
     {
       id: 3,
       image: featureImage3,
       title: "Buyback & Burn Mechanism",
-      description: "Platform fees are used to buy back and burn $PREDICT tokens, reducing supply and supporting long term price growth.",
+      description: "Markets settle based on predefined real world outcomes using trusted resolution mechanisms.",
     },
     {
       id: 4,
       image: featureImage4,
       title: "Onchain Transparency",
-      description: "Markets settle based on predefined real world outcomes, using trusted public sources recorded on chain for full transparency.",
+      description: "All markets and outcomes are recorded on-chain, ensuring verifiable and tamper resistant results.",
     },
     {
       id: 5,
       image: featureImage5,
-      title: "No KYC & 24/7 Open Markets",
-      description: "Fully decentralised with no KYC and open markets available 24/7, giving users the freedom to participate anytime, anywhere.",
+      title: "24/7 Open Markets",
+      description: "Built on efficient blockchain infrastructure, displaying live market movements for fast execution with instant trades and withdrawals.",
     },
     {
       id: 6,
       image: featureImage6,
-      title: "Hold-To-Earn Token",
-      description: "By holding the $PREDICT token, users earn daily USDT through a community revenue sharing model that grows alongside platform usage.",
+      title: "Hold-To-Earn",
+      description: "By holding the $PREDICT token, users earn daily USDT through the community revenue sharing model.",
     },
   ],
 }) {
-  const [api, setApi] = useState();
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCurrent(api.selectedScrollSnap());
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
-
   return (
-    <section className="w-full relative bg-white py-12 md:py-[84px]">
-      <div style={{background: "radial-gradient(29.62% 41.65% at 50% 58.4%, rgba(0, 128, 237, 0.36) 0%, rgba(0, 128, 237, 0.00) 100%)"}} className="absolute top-0 left-0 w-full h-full z-0"></div>
-      <div className="max-w-[1280px] relative z-[9] mx-auto px-4 md:px-8 flex flex-col gap-12 items-center"
-      >
+    <section
+      className="w-full py-12 md:py-[84px] relative bg-white"
+    >
+      <div className="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-12 items-center">
         {/* Header */}
         <div className="flex flex-col gap-2 md:gap-[8px] items-center text-center max-w-[834px]">
-          <h2 className="heading-two text-[#000]  md:max-w-[800px] max-w-[300px]">
+          <h2 className="heading-two capitalize text-black max-w-[952px] whitespace-pre-wrap">
              {title}
           </h2>
-          <p className="text-[#000] paragraph-regular">
+          <p className="text-[#4b4b4b] paragraph-regular whitespace-pre-wrap">
             {subtitle}
           </p>
         </div>
 
         {/* Features Grid */}
         {/* Mobile: Carousel */}
-        <div className="w-full md:hidden flex flex-col items-center gap-6">
+        <div className="w-full md:hidden">
           <Carousel
-            setApi={setApi}
             opts={{
               align: "start",
               loop: true,
@@ -98,7 +81,7 @@ export default function PredictsTheFeatures({
             <CarouselContent>
               {features.map((feature) => (
                 <CarouselItem key={feature.id} className="basis-[85%]">
-                  <div className="bg-white min-h-[320px] rounded-[10px] border border-[#DDD] flex flex-col items-center gap-[20px] w-[320px] max-w-full pt-[10px] pr-[10px] pb-[16px] pl-[10px]">
+                  <div className="w-full overflow-hidden rounded-[18px] border border-[#e5e5e5] bg-white flex flex-col gap-3 pb-6 pt-4 px-4 shadow-[0_10px_30px_rgba(0,0,0,0.04)]">
                     {/* Image */}
                     <div className="h-[152px] relative rounded-[15px] overflow-hidden">
                       <img
@@ -113,10 +96,10 @@ export default function PredictsTheFeatures({
 
                     {/* Title and Description */}
                     <div className="flex flex-col gap-1.5 items-start">
-                      <h4 className="heading-four">
+                      <h4 className="heading-four capitalize w-full text-black">
                         {feature.title}
                       </h4>
-                      <p className=" paragraph-regular md:!text-[16px] max-md:!text-[14px] max-md:!text-start w-full">
+                      <p className="paragraph-regular w-full whitespace-pre-wrap text-[#4b4b4b]">
                         {feature.description}
                       </p>
                     </div>
@@ -125,30 +108,14 @@ export default function PredictsTheFeatures({
               ))}
             </CarouselContent>
           </Carousel>
-          
-          {/* Pagination Dots */}
-          <div className="flex items-center justify-center gap-2">
-            {features.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => api?.scrollTo(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                  current === index
-                    ? "bg-[#0080ED] w-2 h-2"
-                    : "bg-gray-300 w-2 h-2"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
         </div>
 
-        {/* Desktop / Tablet: Grid - 2 rows, 3 columns */}
-        <div className="hidden md:grid grid-cols-3 gap-[16px] w-full">
+        {/* Desktop / Tablet: Grid */}
+        <div className="hidden md:flex flex-wrap gap-5 w-full justify-center md:justify-start">
           {features.map((feature) => (
             <div
               key={feature.id}
-              className="bg-white rounded-[15px] border-[1px] border-[#DDD] overflow-hidden flex flex-col gap-3 md:gap-[12px] pb-6 md:pb-[24px] pt-4 md:pt-[16px] px-4 md:px-[16px]"
+              className="w-full md:w-[390px] overflow-hidden flex flex-col gap-3 md:gap-[12px] pb-6 md:pb-[24px] pt-4 md:pt-[16px] px-4 md:px-[16px] rounded-[18px] border border-[#e5e5e5] bg-white shadow-[0_10px_30px_rgba(0,0,0,0.04)]"
             >
               {/* Image */}
               <div className="h-[152px] relative rounded-[15px] overflow-hidden">
@@ -164,10 +131,10 @@ export default function PredictsTheFeatures({
 
               {/* Title and Description */}
               <div className="flex flex-col gap-1.5 md:gap-[6px] items-start">
-                <h4 className="heading-four w-full">
+                <h4 className="text-base md:text-[20px] font-medium leading-[28px] capitalize w-full text-black">
                   {feature.title}
                 </h4>
-                <p className="paragraph-regular !text-[16px] !leading-[150%] !text-start w-full">
+                <p className="text-[#4b4b4b] text-base md:text-[16px] font-normal leading-[24px] tracking-[0.32px] w-full whitespace-pre-wrap">
                   {feature.description}
                 </p>
               </div>

@@ -5,7 +5,6 @@ import { Footer } from './Footer.jsx';
 export function Layout() {
   return (
     <div className="">
-      
       <Header />
       <main className="">
         <Outlet />
